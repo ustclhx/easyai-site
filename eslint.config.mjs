@@ -5,7 +5,7 @@ import pluginVue from "eslint-plugin-vue";
 import vueParser from "vue-eslint-parser";
 
 export default tseslint.config(
-  { ignores: ["dist/**", "node_modules/**", "work/**", "app/**", "db/**", "examples/**"] },
+  { ignores: ["dist/**", "node_modules/**", "work/**", "app/**", "db/**", "examples/**", "playwright-report/**", "test-results/**"] },
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...pluginVue.configs["flat/recommended"],

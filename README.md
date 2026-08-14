@@ -27,6 +27,8 @@ npm run dev
 npm run typecheck
 npm run lint
 npm run build
+npx playwright install chromium   # 首次
+npm run test:e2e
 ```
 
 ## 项目结构

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
+import arrowDownIcon from "@iconify/icons-eva/arrow-ios-downward-fill";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
@@ -46,7 +48,7 @@ onBeforeUnmount(() => {
       @click.stop="open = !open"
     >
       {{ label }}
-      <span aria-hidden="true" :class="['text-[0.62rem] transition', open ? 'rotate-180' : '']">⌄</span>
+      <Icon :icon="arrowDownIcon" aria-hidden="true" :class="['size-3.5 transition', open ? 'rotate-180' : '']" />
     </button>
     <Transition name="dropdown">
       <div

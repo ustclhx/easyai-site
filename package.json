@@ -11,10 +11,15 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --host 0.0.0.0 --port 4173",
     "typecheck": "vue-tsc --noEmit",
-    "lint": "eslint src build vite.config.ts",
-    "test": "npm run typecheck && npm run lint && vite build"
+    "lint": "eslint src build e2e playwright.config.ts vite.config.ts",
+    "test": "npm run typecheck && npm run lint && vite build",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
+    "@iconify/icons-eva": "^1.2.6",
+    "@iconify/icons-material-symbols": "^1.2.58",
+    "@iconify/vue": "^5.0.1",
     "@radix-ui/colors": "3.0.0",
     "echarts": "6.0.0",
     "lodash-es": "4.17.21",
@@ -23,7 +28,9 @@
     "vue-router": "4.5.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
     "@eslint/js": "9.39.4",
+    "@playwright/test": "1.62.1",
     "@tailwindcss/vite": "4.1.14",
     "@types/lodash-es": "4.17.12",
     "@types/node": "22.19.19",

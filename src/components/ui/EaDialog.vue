@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
+import closeIcon from "@iconify/icons-material-symbols/close";
 import { nextTick, onMounted, ref, watch } from "vue";
 
 const props = defineProps<{
@@ -48,11 +50,11 @@ onMounted(() => syncDialog(props.open));
         </div>
         <button
           type="button"
-          class="absolute top-6 right-6 grid size-10 place-items-center rounded-full border border-line bg-canvas text-xl transition hover:border-line-strong"
+          class="absolute top-6 right-6 grid size-10 place-items-center rounded-full border border-line bg-canvas transition hover:border-line-strong"
           aria-label="关闭咨询表单"
           @click="close"
         >
-          ×
+          <Icon :icon="closeIcon" class="size-5" aria-hidden="true" />
         </button>
         <div class="mt-8">
           <slot />
