@@ -36,30 +36,108 @@ onMounted(() => syncDialog(props.open));
   <Teleport to="body">
     <dialog
       ref="dialog"
-      class="m-auto max-h-[calc(100dvh-2rem)] w-[min(94vw,720px)] overflow-y-auto rounded-[var(--ea-radius-lg)] border border-line bg-surface p-0 text-ink shadow-[var(--ea-shadow-lg)] backdrop:bg-[var(--ea-overlay)] backdrop:backdrop-blur-sm"
+      class="ea-dialog"
       :aria-label="title"
       @cancel.prevent="close"
       @close="close"
       @click="onBackdropClick"
     >
-      <div class="relative p-6 sm:p-9">
-        <div class="pr-12">
+      <div class="ea-dialog__card">
+        <div class="ea-dialog__intro">
           <p class="eyebrow">Consultation</p>
-          <h2 class="mt-4 text-3xl font-semibold tracking-[-0.045em] sm:text-4xl">{{ title }}</h2>
-          <p v-if="description" class="mt-3 max-w-xl leading-7 text-muted">{{ description }}</p>
+          <h2 class="ea-dialog__title">{{ title }}</h2>
+          <p v-if="description" class="ea-dialog__description">{{ description }}</p>
         </div>
         <button
           type="button"
-          class="absolute top-6 right-6 grid size-10 place-items-center rounded-full border border-line bg-canvas transition hover:border-line-strong"
+          class="ea-dialog__close"
           aria-label="关闭咨询表单"
           @click="close"
         >
           <Icon :icon="closeIcon" class="size-5" aria-hidden="true" />
         </button>
-        <div class="mt-8">
+        <div class="ea-dialog__body">
           <slot />
         </div>
       </div>
     </dialog>
   </Teleport>
 </template>
+
+<style scoped lang="scss">
+.ea-dialog {
+  max-width: none;
+  max-height: calc(100dvh - 2rem);
+  width: min(94vw, 720px);
+  margin: auto;
+  overflow: visible;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--ea-ink);
+
+  &::backdrop {
+    background: var(--ea-overlay);
+    backdrop-filter: blur(4px);
+  }
+
+  &__card {
+    position: relative;
+    max-height: inherit;
+    overflow-y: auto;
+    border: 1px solid var(--ea-border);
+    border-radius: var(--ea-radius-lg);
+    padding: 1.5rem;
+    background: var(--ea-surface);
+    box-shadow: var(--ea-shadow-lg);
+
+    @media (min-width: 40rem) {
+      padding: 2.25rem;
+    }
+  }
+
+  &__intro {
+    padding-right: 3rem;
+  }
+
+  &__title {
+    margin-top: 1rem;
+    font-size: 1.875rem;
+    font-weight: 600;
+    letter-spacing: -0.045em;
+
+    @media (min-width: 40rem) {
+      font-size: 2.25rem;
+    }
+  }
+
+  &__description {
+    max-width: 36rem;
+    margin-top: 0.75rem;
+    color: var(--ea-ink-muted);
+    line-height: 1.75;
+  }
+
+  &__close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border: 1px solid var(--ea-border);
+    border-radius: 999px;
+    background: var(--ea-canvas);
+    transition: border-color 160ms ease;
+
+    &:hover {
+      border-color: var(--ea-border-strong);
+    }
+  }
+
+  &__body {
+    margin-top: 2rem;
+  }
+}
+</style>

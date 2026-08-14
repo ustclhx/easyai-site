@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Icon } from "@iconify/vue";
 import { uniqBy } from "lodash-es";
 import { storeToRefs } from "pinia";
 import { computed, watch } from "vue";
@@ -8,6 +9,12 @@ import { useUiStore } from "@/stores/ui";
 import EaButton from "@/components/ui/EaButton.vue";
 import EaContainer from "@/components/ui/EaContainer.vue";
 import EaDropdown, { type DropdownItem } from "@/components/ui/EaDropdown.vue";
+
+const menuIcon = {
+  width: 24,
+  height: 24,
+  body: '<path fill="currentColor" d="M4 17.27v-1h16v1zm0-4.77v-1h16v1zm0-4.77v-1h16v1z"/>',
+};
 
 const ui = useUiStore();
 const { mobileMenuOpen } = storeToRefs(ui);
@@ -70,10 +77,7 @@ watch(() => route.fullPath, ui.closeMobileMenu);
           aria-label="打开导航"
           @click="ui.toggleMobileMenu"
         >
-          <span class="grid gap-1.5" aria-hidden="true">
-            <i class="block h-px w-5 bg-ink" />
-            <i class="block h-px w-5 bg-ink" />
-          </span>
+          <Icon :icon="menuIcon" class="size-5" aria-hidden="true" />
         </button>
       </div>
     </EaContainer>

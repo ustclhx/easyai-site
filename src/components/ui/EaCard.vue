@@ -7,12 +7,41 @@ withDefaults(
 
 <template>
   <article
-    :class="[
-      'rounded-[var(--ea-radius-lg)] border p-6 sm:p-8',
-      dark ? 'border-white/12 bg-white/[0.055] text-white' : 'border-line bg-panel text-ink shadow-[var(--ea-shadow-sm)]',
-      interactive ? 'transition duration-200 hover:-translate-y-1 hover:border-line-strong hover:shadow-[var(--ea-shadow-lg)]' : '',
-    ]"
+    class="ea-card"
+    :class="{ 'ea-card--dark': dark, 'ea-card--interactive': interactive }"
   >
     <slot />
   </article>
 </template>
+
+<style scoped lang="scss">
+.ea-card {
+  border: 1px solid var(--ea-border);
+  border-radius: var(--ea-radius-lg);
+  padding: 1.5rem;
+  background: var(--ea-panel);
+  color: var(--ea-ink);
+  box-shadow: var(--ea-shadow-sm);
+
+  @media (min-width: 40rem) {
+    padding: 2rem;
+  }
+
+  &--dark {
+    border-color: rgb(255 255 255 / 0.12);
+    background: rgb(255 255 255 / 0.055);
+    color: white;
+    box-shadow: none;
+  }
+
+  &--interactive {
+    transition: transform 200ms, border-color 200ms, box-shadow 200ms;
+
+    &:hover {
+      transform: translateY(-0.25rem);
+      border-color: var(--ea-border-strong);
+      box-shadow: var(--ea-shadow-lg);
+    }
+  }
+}
+</style>

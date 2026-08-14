@@ -7,7 +7,7 @@ easyai 公司门户：Vue 3 SPA，介绍自媒体运营与电商营销两类 AI 
 ## 技术栈
 
 - Vue 3 + TypeScript + Vite 7
-- Tailwind CSS 4（`@theme inline` 映射语义色）
+- Tailwind CSS 4（`@theme inline` 映射语义色）+ Sass（`src/components/ui/` 基础组件）
 - Pinia 3、Vue Router 4
 - ECharts 6、lodash-es、Radix Colors
 - Node `>= 22.13.0`
@@ -84,6 +84,18 @@ npm run test:e2e     # Playwright 关键路径（导航、咨询弹窗、移动�
 
 品牌色：墨绿 `#14201a`（`brand-ink`）、亮柠 `#b8f348`（`brand-lime`）。选区、主按钮、深色区块强调都走这两色。
 
+### `src/components/ui/` 基础组件
+
+模板只留 `ea-*` BEM 类名（如 `ea-button`、`ea-button--primary`）。少量动态状态或第三方节点（如 Icon 的 `size-5`）可以留在模板。
+
+样式写在 `<style scoped lang="scss">`：
+
+- 用 SCSS 嵌套写 modifier（`&--primary`）、伪类/伪元素（`&:hover`、`&::backdrop`）和断点。
+- 颜色、圆角、阴影走 CSS 变量，不要新写 hex：`--ea-*`（见 `tokens.css`）。
+- **不要在 SFC 的 SCSS 里用 `@apply`**。Tailwind v4 + Vite 不会展开这些规则，样式会静默丢失（容器 padding、按钮、section 间距都会坏掉）。
+
+页面与 `layout/` 仍可直接在模板写 Tailwind 工具类；不要把 BEM 扩散到 view。
+
 ## 文案与产品边界
 
 - 中文正文 + 英文 eyebrow / badge。语气冷静、可执行，避免营销空话。
@@ -116,7 +128,7 @@ npm run test:e2e     # Playwright 关键路径（导航、咨询弹窗、移动�
 ## 改完自检
 
 1. 新页面已挂路由，跨页文案在 `src/data/site.ts`。
-2. 用了现有 `Ea*` 与语义色，没有平行的布局/组件体系。
+2. 用了现有 `Ea*` 与语义色，没有平行的布局/组件体系。新的 `Ea*` 基础组件用 scoped SCSS（不要 `@apply`），模板不堆长 utility 字符串。
 3. 咨询入口走 `openConsult`。
 4. 文案没有效果承诺；图表有示意说明和无障碍描述。
 5. `npm run typecheck` 与 `npm run lint` 通过。用户可见的布局/流程改动，按 `.agents/skills/e2e-testing-patterns/SKILL.md` 判断是否补浏览器检查。

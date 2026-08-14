@@ -35,7 +35,7 @@ const classes = computed(() => [
   </button>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .ea-button {
   display: inline-flex;
   min-height: 2.8rem;
@@ -49,55 +49,77 @@ const classes = computed(() => [
   line-height: 1;
   text-decoration: none;
   transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  &--sm {
+    min-height: 2.4rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.78rem;
+  }
+
+  &--md {
+    padding: 0.8rem 1.25rem;
+  }
+
+  &--lg {
+    min-height: 3.35rem;
+    padding: 1rem 1.55rem;
+  }
+
+  &--primary {
+    color: var(--ea-brand-ink);
+    background: var(--ea-brand-lime);
+    border-color: var(--ea-brand-lime);
+
+    &:hover {
+      background: var(--ea-brand-lime-bright);
+    }
+  }
+
+  &--secondary {
+    color: var(--ea-ink);
+    background: var(--ea-surface);
+    border-color: var(--ea-border);
+
+    &:hover {
+      border-color: var(--ea-border-strong);
+    }
+  }
+
+  &--ghost {
+    color: var(--ea-ink);
+    background: transparent;
+
+    &:hover {
+      background: var(--ea-panel-strong);
+    }
+  }
+
+  &--inverse {
+    color: white;
+    background: var(--ea-brand-ink);
+    border-color: var(--sage-11);
+  }
+
+  &__arrow {
+    display: inline-grid;
+    width: 1.25rem;
+    height: 1.25rem;
+    place-items: center;
+    font-size: 0.82rem;
+    transition: transform 160ms ease;
+  }
+
+  &:hover &__arrow {
+    transform: translate(2px, -2px);
+  }
 }
-
-.ea-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-}
-
-.ea-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.55;
-}
-
-.ea-button--sm { min-height: 2.4rem; padding: 0.65rem 1rem; font-size: 0.78rem; }
-.ea-button--md { padding: 0.8rem 1.25rem; }
-.ea-button--lg { min-height: 3.35rem; padding: 1rem 1.55rem; }
-
-.ea-button--primary {
-  color: var(--ea-brand-ink);
-  background: var(--ea-brand-lime);
-  border-color: var(--ea-brand-lime);
-}
-.ea-button--primary:hover { background: var(--ea-brand-lime-bright); }
-
-.ea-button--secondary {
-  color: var(--ea-ink);
-  background: var(--ea-surface);
-  border-color: var(--ea-border);
-}
-.ea-button--secondary:hover { border-color: var(--ea-border-strong); }
-
-.ea-button--ghost {
-  color: var(--ea-ink);
-  background: transparent;
-}
-.ea-button--ghost:hover { background: var(--ea-panel-strong); }
-
-.ea-button--inverse {
-  color: white;
-  background: var(--ea-brand-ink);
-  border-color: var(--sage-11);
-}
-
-.ea-button__arrow {
-  display: inline-grid;
-  width: 1.25rem;
-  height: 1.25rem;
-  place-items: center;
-  font-size: 0.82rem;
-  transition: transform 160ms ease;
-}
-
-.ea-button:hover .ea-button__arrow { transform: translate(2px, -2px); }
 </style>

@@ -10,17 +10,53 @@ withDefaults(
 
 <template>
   <section
-    :class="[
-      'relative overflow-hidden',
-      tight ? 'py-14 sm:py-20' : 'py-20 sm:py-28 lg:py-36',
-      {
-        'bg-canvas text-ink': tone === 'default',
-        'bg-surface text-ink': tone === 'soft',
-        'bg-brand-ink text-white': tone === 'dark',
-        'bg-brand-lime text-brand-ink': tone === 'accent',
-      },
-    ]"
+    class="ea-section"
+    :class="[`ea-section--${tone}`, { 'ea-section--tight': tight }]"
   >
     <slot />
   </section>
 </template>
+
+<style scoped lang="scss">
+.ea-section {
+  position: relative;
+  overflow: hidden;
+  padding-block: 5rem;
+  background: var(--ea-canvas);
+  color: var(--ea-ink);
+
+  @media (min-width: 40rem) {
+    padding-block: 7rem;
+  }
+
+  @media (min-width: 64rem) {
+    padding-block: 9rem;
+  }
+
+  &--tight {
+    padding-block: 3.5rem;
+
+    @media (min-width: 40rem) {
+      padding-block: 5rem;
+    }
+
+    @media (min-width: 64rem) {
+      padding-block: 5rem;
+    }
+  }
+
+  &--soft {
+    background: var(--ea-surface);
+  }
+
+  &--dark {
+    background: var(--ea-brand-ink);
+    color: white;
+  }
+
+  &--accent {
+    background: var(--ea-brand-lime);
+    color: var(--ea-brand-ink);
+  }
+}
+</style>

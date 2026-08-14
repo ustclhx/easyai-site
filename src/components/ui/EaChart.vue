@@ -42,7 +42,25 @@ onBeforeUnmount(() => {
 
 <template>
   <div>
-    <div ref="root" class="h-[320px] w-full" role="img" :aria-label="label" />
-    <p class="sr-only">{{ summary }}</p>
+    <div ref="root" class="ea-chart" role="img" :aria-label="label" />
+    <p class="ea-chart__summary">{{ summary }}</p>
   </div>
 </template>
+
+<style scoped lang="scss">
+.ea-chart {
+  width: 100%;
+  height: 320px;
+
+  &__summary {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
+</style>
