@@ -1,0 +1,11 @@
+{
+  "$schema": "https://esa.aliyun.com/schema/esa.jsonc",
+  "name": "easyai-site",
+  "description": "easyai Vue 3 marketing portal",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "assets": {
+    "directory": "./dist/client",
+    "notFoundStrategy": "singlePageApplication"
+  }
+}

@@ -50,3 +50,28 @@ VITE_CONTACT_EMAIL=hello@your-company.com
 ```
 
 未配置邮箱时，表单会明确显示为私密预览状态，不会发送用户信息。
+
+## 阿里云 ESA Pages
+
+仓库根目录的 `esa.jsonc` 是 ESA Pages 的部署配置。通过 GitHub 仓库导入时，ESA 应使用以下设置：
+
+| 配置项 | 值 |
+| --- | --- |
+| 根目录 | `/` |
+| 安装命令 | `npm ci` |
+| 构建命令 | `npm run build` |
+| 静态资源目录 | `./dist/client` |
+| 函数文件路径 | 留空 |
+| Node.js | 22（由 `package.json#engines` 指定） |
+
+这是一个纯前端 Vue SPA，不需要配置 ESA 函数入口。`assets.notFoundStrategy` 已设为 `singlePageApplication`，直接访问 `/services` 等客户端路由时会返回 `index.html` 和 `200 OK`。
+
+本地检查构建产物：
+
+```bash
+npm ci
+npm run build
+test -f dist/client/index.html
+```
+
+如果项目已经在 ESA 控制台中创建，推送 `esa.jsonc` 后重新触发部署即可。配置文件的优先级高于控制台中的构建信息。
