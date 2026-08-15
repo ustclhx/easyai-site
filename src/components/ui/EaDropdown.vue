@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { Icon } from "@iconify/vue";
-import arrowDownIcon from "@iconify/icons-eva/arrow-ios-downward-fill";
-import { onBeforeUnmount, onMounted, ref } from "vue";
+import { nextTick, onBeforeUnmount, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
 export interface DropdownItem {
@@ -13,10 +11,29 @@ export interface DropdownItem {
 defineProps<{ label: string; items: DropdownItem[] }>();
 const open = ref(false);
 const root = ref<HTMLElement>();
+const trigger = ref<HTMLButtonElement>();
+const menu = ref<HTMLElement>();
 const router = useRouter();
 
 function close() {
   open.value = false;
+}
+
+function closeAndRestore() {
+  close();
+  nextTick(() => trigger.value?.focus());
+}
+
+function focusItem(index: number) {
+  const items = menu.value?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]');
+  if (!items?.length) return;
+  const nextIndex = (index + items.length) % items.length;
+  items[nextIndex]?.focus();
+}
+
+function openMenu() {
+  open.value = true;
+  nextTick(() => focusItem(0));
 }
 
 function onDocumentClick(event: MouseEvent) {
@@ -24,7 +41,35 @@ function onDocumentClick(event: MouseEvent) {
 }
 
 function onKeydown(event: KeyboardEvent) {
-  if (event.key === "Escape") close();
+  if (event.key === "Escape") closeAndRestore();
+}
+
+function onTriggerKeydown(event: KeyboardEvent) {
+  if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+    event.preventDefault();
+    openMenu();
+  }
+}
+
+function onMenuKeydown(event: KeyboardEvent) {
+  const items = menu.value?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]');
+  const currentIndex = Array.from(items ?? []).indexOf(document.activeElement as HTMLButtonElement);
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeAndRestore();
+  } else if (event.key === "ArrowDown") {
+    event.preventDefault();
+    focusItem(currentIndex + 1);
+  } else if (event.key === "ArrowUp") {
+    event.preventDefault();
+    focusItem(currentIndex - 1);
+  } else if (event.key === "Home") {
+    event.preventDefault();
+    focusItem(0);
+  } else if (event.key === "End") {
+    event.preventDefault();
+    focusItem((items?.length ?? 1) - 1);
+  }
 }
 
 onMounted(() => {
@@ -39,119 +84,47 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="root" class="ea-dropdown">
+  <div ref="root" class="relative">
     <button
+      ref="trigger"
       type="button"
-      class="ea-dropdown__trigger"
+      class="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm font-semibold text-muted transition hover:bg-panel-strong hover:text-ink"
       :aria-expanded="open"
       aria-haspopup="menu"
       @click.stop="open = !open"
+      @keydown="onTriggerKeydown"
     >
       {{ label }}
-      <Icon
-        :icon="arrowDownIcon"
-        aria-hidden="true"
-        class="ea-dropdown__chevron"
-        :class="{ 'is-open': open }"
-      />
+      <span aria-hidden="true" :class="['transition', open ? 'rotate-180' : '']"><EaIcon name="chevron-down" :size="14" /></span>
     </button>
     <Transition name="dropdown">
-      <div v-if="open" role="menu" class="ea-dropdown__panel">
+      <div
+        v-if="open"
+        ref="menu"
+        role="menu"
+        tabindex="-1"
+        class="absolute top-[calc(100%+0.8rem)] left-1/2 w-80 -translate-x-1/2 rounded-[var(--ea-radius-md)] border border-line bg-surface p-2 shadow-[var(--ea-shadow-lg)]"
+        @keydown="onMenuKeydown"
+      >
         <button
           v-for="item in items"
           :key="item.to"
           type="button"
           role="menuitem"
-          class="ea-dropdown__item"
+          class="grid w-full gap-1 rounded-xl px-4 py-3 text-left transition hover:bg-panel-strong"
           @click="router.push(item.to); close()"
         >
-          <span class="ea-dropdown__label">{{ item.label }}</span>
-          <span class="ea-dropdown__hint">{{ item.description }}</span>
+          <span class="text-sm font-bold text-ink">{{ item.label }}</span>
+          <span class="text-xs leading-5 text-muted">{{ item.description }}</span>
         </button>
       </div>
     </Transition>
   </div>
 </template>
 
-<style scoped lang="scss">
-.ea-dropdown {
-  position: relative;
-
-  &__trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    border-radius: 999px;
-    padding: 0.5rem 0.75rem;
-    color: var(--ea-ink-muted);
-    font-size: 0.875rem;
-    font-weight: 600;
-    transition: background 160ms ease, color 160ms ease;
-
-    &:hover {
-      background: var(--ea-panel-strong);
-      color: var(--ea-ink);
-    }
-  }
-
-  &__chevron {
-    width: 0.875rem;
-    height: 0.875rem;
-    transition: transform 160ms ease;
-
-    &.is-open {
-      transform: rotate(180deg);
-    }
-  }
-
-  &__panel {
-    position: absolute;
-    top: calc(100% + 0.8rem);
-    left: 50%;
-    width: 20rem;
-    border: 1px solid var(--ea-border);
-    border-radius: var(--ea-radius-md);
-    padding: 0.5rem;
-    background: var(--ea-surface);
-    box-shadow: var(--ea-shadow-lg);
-    transform: translateX(-50%);
-  }
-
-  &__item {
-    display: grid;
-    width: 100%;
-    gap: 0.25rem;
-    border-radius: 0.75rem;
-    padding: 0.75rem 1rem;
-    text-align: left;
-    transition: background 160ms ease;
-
-    &:hover {
-      background: var(--ea-panel-strong);
-    }
-  }
-
-  &__label {
-    color: var(--ea-ink);
-    font-size: 0.875rem;
-    font-weight: 700;
-  }
-
-  &__hint {
-    color: var(--ea-ink-muted);
-    font-size: 0.75rem;
-    line-height: 1.25rem;
-  }
-}
-
+<style scoped>
 .dropdown-enter-active,
-.dropdown-leave-active {
-  transition: opacity 140ms ease, transform 140ms ease;
-}
-
+.dropdown-leave-active { transition: opacity 140ms ease, transform 140ms ease; }
 .dropdown-enter-from,
-.dropdown-leave-to {
-  opacity: 0;
-  transform: translate(-50%, -6px);
-}
+.dropdown-leave-to { opacity: 0; transform: translate(-50%, -6px); }
 </style>

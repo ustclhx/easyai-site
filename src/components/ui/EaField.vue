@@ -7,12 +7,13 @@ const props = withDefaults(
     label: string;
     name: string;
     type?: "text" | "email" | "tel";
+    autocomplete?: string;
     placeholder?: string;
     required?: boolean;
     multiline?: boolean;
     rows?: number;
   }>(),
-  { type: "text", placeholder: "", required: false, multiline: false, rows: 4 },
+  { type: "text", autocomplete: "off", placeholder: "", required: false, multiline: false, rows: 4 },
 );
 
 const emit = defineEmits<{ "update:modelValue": [value: string] }>();
@@ -20,8 +21,8 @@ const fieldId = `ea-field-${useId()}`;
 </script>
 
 <template>
-  <label :for="fieldId" class="ea-field">
-    <span>{{ label }} <span v-if="required" aria-hidden="true" class="ea-field__required">*</span></span>
+  <label :for="fieldId" class="grid gap-2 text-sm font-semibold text-ink">
+    <span>{{ label }} <span v-if="required" aria-hidden="true" class="text-[var(--ea-danger)]">*</span></span>
     <textarea
       v-if="multiline"
       :id="fieldId"
@@ -30,7 +31,7 @@ const fieldId = `ea-field-${useId()}`;
       :required="required"
       :rows="rows"
       :value="modelValue"
-      class="ea-field__control ea-field__control--area"
+      class="min-h-28 resize-y rounded-[var(--ea-radius-sm)] border border-line bg-canvas px-4 py-3 font-normal text-ink placeholder:text-muted/60 transition focus:border-line-strong"
       @input="emit('update:modelValue', ($event.target as HTMLTextAreaElement).value)"
     />
     <input
@@ -38,53 +39,12 @@ const fieldId = `ea-field-${useId()}`;
       :id="fieldId"
       :name="name"
       :type="props.type"
+      :autocomplete="props.autocomplete"
       :placeholder="placeholder"
       :required="required"
       :value="modelValue"
-      class="ea-field__control ea-field__control--input"
+      class="h-12 rounded-[var(--ea-radius-sm)] border border-line bg-canvas px-4 font-normal text-ink placeholder:text-muted/60 transition focus:border-line-strong"
       @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
     />
   </label>
 </template>
-
-<style scoped lang="scss">
-.ea-field {
-  display: grid;
-  gap: 0.5rem;
-  color: var(--ea-ink);
-  font-size: 0.875rem;
-  font-weight: 600;
-
-  &__required {
-    color: var(--ea-danger);
-  }
-
-  &__control {
-    border: 1px solid var(--ea-border);
-    border-radius: var(--ea-radius-sm);
-    padding-inline: 1rem;
-    background: var(--ea-canvas);
-    color: var(--ea-ink);
-    font-weight: 400;
-    transition: border-color 160ms ease;
-
-    &::placeholder {
-      color: color-mix(in srgb, var(--ea-ink-muted) 60%, transparent);
-    }
-
-    &:focus {
-      border-color: var(--ea-border-strong);
-    }
-
-    &--area {
-      min-height: 7rem;
-      padding-block: 0.75rem;
-      resize: vertical;
-    }
-
-    &--input {
-      height: 3rem;
-    }
-  }
-}
-</style>

@@ -1,50 +1,28 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { EChartsCoreOption } from "echarts/core";
-import EaChart from "@/components/ui/EaChart.vue";
 
-const option = computed<EChartsCoreOption>(() => ({
-  animation: !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-  grid: { left: 14, right: 14, top: 24, bottom: 24, containLabel: true },
-  tooltip: {
-    trigger: "axis",
-    backgroundColor: "#14201a",
-    borderWidth: 0,
-    textStyle: { color: "#fff" },
-  },
-  xAxis: {
-    type: "category",
-    boundaryGap: false,
-    data: ["第 1 周", "第 2 周", "第 3 周", "第 4 周", "第 5 周", "第 6 周"],
-    axisLine: { lineStyle: { color: "#dfe4df" } },
-    axisTick: { show: false },
-    axisLabel: { color: "#66736b", fontSize: 11 },
-  },
-  yAxis: {
-    type: "value",
-    splitLine: { lineStyle: { color: "#e7ebe7" } },
-    axisLabel: { show: false },
-  },
-  series: [
-    {
-      name: "稳定触达",
-      type: "line",
-      smooth: true,
-      symbol: "circle",
-      symbolSize: 8,
-      data: [28, 43, 51, 72, 86, 108],
-      lineStyle: { color: "#14201a", width: 3 },
-      itemStyle: { color: "#b8f348", borderColor: "#14201a", borderWidth: 2 },
-      areaStyle: { color: "rgba(184, 243, 72, 0.24)" },
-    },
-  ],
-}));
+const weeks = ["第 1 周", "第 2 周", "第 3 周", "第 4 周", "第 5 周", "第 6 周"];
+const values = [28, 43, 51, 72, 86, 108];
+const points = computed(() => values.map((value, index) => `${index * 108 + 30},${218 - value * 1.55}`).join(" "));
+const areaPoints = computed(() => `30,218 ${points.value} 570,218`);
 </script>
 
 <template>
-  <EaChart
-    :option="option"
-    label="六周稳定触达趋势示意图"
-    summary="示意数据从第 1 周的 28 增长到第 6 周的 108，用于表达流程逐步稳定后的增长趋势，不代表客户承诺。"
-  />
+  <figure class="mt-5" role="img" aria-label="六周相对效率指数示意图">
+    <svg viewBox="0 0 600 260" class="h-auto w-full" aria-hidden="true" focusable="false">
+      <g stroke="var(--ea-border)" stroke-width="1">
+        <line x1="30" y1="52" x2="570" y2="52" />
+        <line x1="30" y1="108" x2="570" y2="108" />
+        <line x1="30" y1="164" x2="570" y2="164" />
+        <line x1="30" y1="218" x2="570" y2="218" />
+      </g>
+      <polygon :points="areaPoints" fill="var(--ea-accent-soft)" opacity="0.72" />
+      <polyline :points="points" fill="none" stroke="var(--ea-brand-ink)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+      <circle v-for="(value, index) in values" :key="value" :cx="index * 108 + 30" :cy="218 - value * 1.55" r="6" fill="var(--ea-brand-lime)" stroke="var(--ea-brand-ink)" stroke-width="3" />
+    </svg>
+    <div class="grid grid-cols-6 gap-1 text-center text-[0.68rem] text-muted">
+      <span v-for="week in weeks" :key="week">{{ week }}</span>
+    </div>
+    <figcaption class="sr-only">示意数据从第 1 周的 28 增长到第 6 周的 108，用于表达流程逐步稳定后的相对趋势，不代表客户承诺。</figcaption>
+  </figure>
 </template>

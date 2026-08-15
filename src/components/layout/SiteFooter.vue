@@ -13,7 +13,7 @@ const year = new Date().getFullYear();
       <div class="grid gap-12 border-b border-white/10 py-16 lg:grid-cols-[1.3fr_0.7fr] lg:items-end lg:py-24">
         <div>
           <p class="text-sm font-semibold text-brand-lime">一起把 AI 放进真实业务</p>
-          <h2 class="mt-5 max-w-4xl text-4xl font-medium tracking-[-0.055em] sm:text-6xl lg:text-7xl">从一个高频场景开始，<br />让团队立刻轻一点。</h2>
+          <h2 class="mt-5 max-w-4xl text-4xl font-medium tracking-[-0.03em] sm:text-6xl lg:text-6xl">从一个高频场景开始，<br />让团队立刻轻一点。</h2>
         </div>
         <div class="lg:text-right">
           <EaButton variant="primary" size="lg" @click="ui.openConsult">发起合作咨询</EaButton>

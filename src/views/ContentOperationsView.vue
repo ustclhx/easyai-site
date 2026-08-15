@@ -3,6 +3,7 @@ import EaBadge from "@/components/ui/EaBadge.vue";
 import EaButton from "@/components/ui/EaButton.vue";
 import EaCard from "@/components/ui/EaCard.vue";
 import EaContainer from "@/components/ui/EaContainer.vue";
+import EaIcon from "@/components/ui/EaIcon.vue";
 import EaSection from "@/components/ui/EaSection.vue";
 import { useUiStore } from "@/stores/ui";
 
@@ -21,7 +22,7 @@ const channels = ["小红书", "抖音", "视频号", "公众号", "企业微信
   <div>
     <EaSection class="!pb-18 !pt-20 sm:!pt-28">
       <EaContainer>
-        <div class="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+        <div class="grid min-w-0 gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
           <div>
             <EaBadge tone="accent">01 / 内容获客</EaBadge>
             <h1 class="section-title mt-8 max-w-5xl">把内容做出来，<br />也把客户<span class="text-[var(--ea-accent-hover)]">接回来。</span></h1>
@@ -36,13 +37,13 @@ const channels = ["小红书", "抖音", "视频号", "公众号", "企业微信
 
     <EaSection tone="dark" tight>
       <EaContainer>
-        <div class="mb-10 grid gap-6 lg:grid-cols-2 lg:items-end">
-          <div><p class="eyebrow !text-white/55">Workflow</p><h2 class="mt-5 text-4xl font-medium tracking-[-0.05em] sm:text-6xl">一条从内容到成交的线。</h2></div>
+        <div class="mb-10 grid min-w-0 gap-6 lg:grid-cols-2 lg:items-end">
+          <div><p class="eyebrow !text-white/55">Workflow</p><h2 class="mt-5 text-4xl font-medium tracking-[-0.03em] sm:text-6xl">一条从内容到成交的线。</h2></div>
           <p class="max-w-xl leading-7 text-white/58 lg:justify-self-end">不同平台保留不同表达，线索和客户信息则进入统一的处理规则。</p>
         </div>
         <div class="grid gap-4 lg:grid-cols-4">
           <EaCard v-for="item in modules" :key="item.number" dark class="min-h-[340px] !p-6">
-            <div class="flex items-center justify-between"><span class="text-xs font-black text-brand-lime">{{ item.number }}</span><span class="text-white/20">→</span></div>
+            <div class="flex items-center justify-between"><span class="text-xs font-black text-brand-lime">{{ item.number }}</span><EaIcon name="arrow-right" :size="16" class="text-white/25" /></div>
             <h3 class="mt-12 text-3xl font-medium tracking-[-0.04em]">{{ item.title }}</h3>
             <p class="mt-4 text-sm leading-6 text-white/55">{{ item.text }}</p>
             <div class="mt-7 flex flex-wrap gap-2"><EaBadge v-for="tag in item.tags" :key="tag" tone="dark">{{ tag }}</EaBadge></div>
@@ -56,14 +57,14 @@ const channels = ["小红书", "抖音", "视频号", "公众号", "企业微信
         <div class="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
           <div>
             <p class="eyebrow">Human in the loop</p>
-            <h2 class="mt-6 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">自动化不是自动发布一切。</h2>
+            <h2 class="mt-6 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">自动化不是自动发布一切。</h2>
             <p class="mt-5 leading-7 text-muted">我们会为品牌风险、平台规则和客户关系保留人工审核点。AI 建议动作，人决定边界。</p>
             <EaButton size="lg" class="mt-8" @click="ui.openConsult">咨询内容运营方案</EaButton>
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
             <EaCard v-for="item in [{title:'适合交给 AI', list:['选题收集与整理','多平台内容改写','评论私信初筛','跟进信息摘要']},{title:'保留人工决策', list:['品牌观点与立场','敏感内容审核','高价值客户沟通','成交条件与承诺']}]" :key="item.title">
               <h3 class="text-xl font-semibold">{{ item.title }}</h3>
-              <ul class="mt-6 grid gap-3 text-sm text-muted"><li v-for="text in item.list" :key="text" class="flex gap-3"><span class="text-[var(--ea-accent-hover)]">●</span>{{ text }}</li></ul>
+              <ul class="mt-6 grid gap-3 text-sm text-muted"><li v-for="text in item.list" :key="text" class="flex gap-3"><EaIcon name="check" :size="15" class="mt-0.5 shrink-0 text-[var(--ea-accent-hover)]" />{{ text }}</li></ul>
             </EaCard>
           </div>
         </div>

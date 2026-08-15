@@ -3,6 +3,7 @@ import { storeToRefs } from "pinia";
 import EaButton from "@/components/ui/EaButton.vue";
 import EaDialog from "@/components/ui/EaDialog.vue";
 import EaField from "@/components/ui/EaField.vue";
+import EaIcon from "@/components/ui/EaIcon.vue";
 import { useContactStore } from "@/stores/contact";
 import { useUiStore } from "@/stores/ui";
 
@@ -26,10 +27,10 @@ function onOpenChange(open: boolean) {
   >
     <form class="grid gap-5" @submit.prevent="contact.submit">
       <div class="grid gap-5 sm:grid-cols-2">
-        <EaField v-model="form.name" name="name" label="怎么称呼" placeholder="你的姓名" required />
-        <EaField v-model="form.company" name="company" label="公司 / 团队" placeholder="团队名称（选填）" />
+        <EaField v-model="form.name" name="name" label="怎么称呼" placeholder="你的姓名" autocomplete="name" required />
+        <EaField v-model="form.company" name="company" label="公司 / 团队" placeholder="团队名称（选填）" autocomplete="organization" />
       </div>
-      <EaField v-model="form.contact" name="contact" label="联系方式" placeholder="微信、手机号或邮箱" required />
+      <EaField v-model="form.contact" name="contact" label="联系方式" placeholder="微信、手机号或邮箱" autocomplete="off" required />
       <label class="grid gap-2 text-sm font-semibold text-ink">
         <span>关注方向</span>
         <select v-model="form.service" name="service" class="h-12 rounded-[var(--ea-radius-sm)] border border-line bg-canvas px-4 font-normal text-ink">
@@ -50,10 +51,10 @@ function onOpenChange(open: boolean) {
         {{ feedback }}
       </p>
       <div class="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p class="max-w-sm text-xs leading-5 text-muted">提交即代表你同意我们仅将信息用于本次业务沟通。</p>
+        <p class="max-w-sm text-xs leading-5 text-muted">请确认联系方式准确。我们只会根据你提交的内容联系你，不会自动加入营销名单。</p>
         <EaButton type="submit" size="lg" :disabled="status === 'submitting'">
           {{ status === "submitting" ? "正在提交" : "提交咨询" }}
-          <template #trailing>→</template>
+          <template #trailing><EaIcon name="arrow-right" :size="16" /></template>
         </EaButton>
       </div>
     </form>

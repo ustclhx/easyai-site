@@ -11,14 +11,14 @@
 @import "@radix-ui/colors/white-alpha.css";
 
 :root {
-  --ea-canvas: var(--sage-1);
-  --ea-surface: var(--sage-2);
-  --ea-panel: color-mix(in srgb, var(--sage-1) 86%, transparent);
-  --ea-panel-strong: var(--sage-3);
+  --ea-canvas: #f7f9f4;
+  --ea-surface: #eef3ea;
+  --ea-panel: #ffffff;
+  --ea-panel-strong: #e4ede0;
   --ea-ink: var(--sage-12);
   --ea-ink-muted: var(--sage-11);
-  --ea-border: var(--sage-6);
-  --ea-border-strong: var(--sage-8);
+  --ea-border: #d4dfd0;
+  --ea-border-strong: #a9bca4;
   --ea-accent-soft: var(--lime-3);
   --ea-accent: var(--lime-9);
   --ea-accent-hover: var(--lime-10);
@@ -31,17 +31,17 @@
   --ea-brand-ink: #14201a;
   --ea-brand-lime: #b8f348;
   --ea-brand-lime-bright: #c9ff68;
-  --ea-radius-sm: 0.7rem;
-  --ea-radius-md: 1.1rem;
-  --ea-radius-lg: 1.7rem;
-  --ea-shadow-sm: 0 1px 0 color-mix(in srgb, var(--ea-ink) 7%, transparent), 0 12px 32px rgba(20, 32, 26, 0.05);
-  --ea-shadow-lg: 0 32px 90px rgba(20, 32, 26, 0.16);
+  --ea-radius-sm: 0.6rem;
+  --ea-radius-md: 0.85rem;
+  --ea-radius-lg: 1rem;
+  --ea-shadow-sm: 0 1px 0 rgba(20, 32, 26, 0.06), 0 10px 24px rgba(20, 32, 26, 0.06);
+  --ea-shadow-lg: 0 24px 64px rgba(20, 32, 26, 0.14);
 }
 
 .dark {
   --ea-canvas: var(--sage-1);
   --ea-surface: var(--sage-2);
-  --ea-panel: color-mix(in srgb, var(--sage-2) 90%, transparent);
+  --ea-panel: #ffffff;
   --ea-panel-strong: var(--sage-3);
   --ea-ink: var(--sage-12);
   --ea-ink-muted: var(--sage-11);

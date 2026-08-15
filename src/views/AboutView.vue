@@ -30,7 +30,7 @@ const principles = [
       <EaContainer>
         <div class="grid gap-12 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
           <div><p class="eyebrow !text-white/55">Why we exist</p><p class="mt-5 max-w-sm leading-7 text-white/58">大公司能用团队和系统解决的问题，小团队更需要简单、连贯、马上可用的工作方式。</p></div>
-          <blockquote class="text-3xl font-medium leading-[1.18] tracking-[-0.045em] sm:text-5xl lg:text-6xl">“不是再给小团队一堆工具，<br />而是给他们一套<span class="text-brand-lime">能完成工作的能力。</span>”</blockquote>
+          <blockquote class="text-3xl font-medium leading-[1.18] tracking-[-0.03em] sm:text-5xl lg:text-6xl">“不是再给小团队一堆工具，<br />而是给他们一套<span class="text-brand-lime">能完成工作的能力。</span>”</blockquote>
         </div>
       </EaContainer>
     </EaSection>
@@ -50,7 +50,7 @@ const principles = [
     <EaSection tone="soft" tight>
       <EaContainer>
         <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
-          <div><p class="eyebrow">Keep it practical</p><h2 class="mt-5 text-4xl font-semibold tracking-[-0.05em] sm:text-5xl">有具体问题，比有完整方案更重要。</h2><p class="mt-4 max-w-2xl leading-7 text-muted">如果你正在经营内容或电商业务，欢迎从一个真实卡点开始聊。</p></div>
+          <div><p class="eyebrow">Keep it practical</p><h2 class="mt-5 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">有具体问题，比有完整方案更重要。</h2><p class="mt-4 max-w-2xl leading-7 text-muted">如果你正在经营内容或电商业务，欢迎从一个真实卡点开始聊。</p></div>
           <EaButton size="lg" @click="ui.openConsult">和 easyai 聊聊</EaButton>
         </div>
       </EaContainer>
